@@ -1,0 +1,115 @@
+Q13: Generate Fibonacci SeriesThis program prints the first \(n\) terms of the Fibonacci sequence starting from 0 and 1.
+#include <stdio.h>
+
+void generateFibonacci(int n) {
+    int t1 = 0, t2 = 1, nextTerm;
+
+    printf("Fibonacci Series: ");
+    for (int i = 1; i <= n; ++i) {
+        printf("%d ", t1);
+        nextTerm = t1 + t2;
+        t1 = t2;
+        t2 = nextTerm;
+    }
+    printf("\n");
+}
+
+int main() {
+    int terms = 10; // Example: first 10 terms
+    generateFibonacci(terms);
+    return 0;
+}
+
+Q14: Find nth Fibonacci TermThis program calculates and prints only the specific value at the 1-indexed position \(n\).
+#include <stdio.h>
+
+int nthFibonacci(int n) {
+    if (n <= 0) return -1; // Invalid input
+    if (n == 1) return 0;
+    if (n == 2) return 1;
+
+    int a = 0, b = 1, next;
+    for (int i = 3; i <= n; i++) {
+        next = a + b;
+        a = b;
+        b = next;
+    }
+    return b;
+}
+
+int main() {
+    int n = 10; // Example: Find 10th term
+    printf("The %dth Fibonacci term is: %d\n", n, nthFibonacci(n));
+    return 0;
+}
+
+Q15: Check Armstrong NumberThis program checks if a given number is an Armstrong number by counting its digits and raising each digit to that power.
+#include <stdio.h>
+#include <math.h>
+
+int isArmstrong(int num) {
+    int originalNum = num, remainder, result = 0, n = 0;
+
+    // Count the number of digits
+    while (originalNum != 0) {
+        originalNum /= 10;
+        ++n;
+    }
+
+    originalNum = num;
+
+    // Calculate sum of digits raised to power of n
+    while (originalNum != 0) {
+        remainder = originalNum % 10;
+        // round() helps avoid floating-point inaccuracies from pow()
+        result += round(pow(remainder, n));
+        originalNum /= 10;
+    }
+
+    return (result == num);
+}
+
+int main() {
+    int num = 153; // Example number
+    if (isArmstrong(num))
+        printf("%d is an Armstrong number.\n", num);
+    else
+        printf("%d is not an Armstrong number.\n", num);
+    return 0;
+}
+
+Q16: Print Armstrong Numbers in a RangeThis program loops through a range of numbers and outputs all Armstrong numbers found inside it.
+#include <stdio.h>
+#include <math.h>
+
+// Reusing logic from Q15 to check individual numbers
+int checkArmstrong(int num) {
+    int originalNum = num, remainder, result = 0, n = 0;
+    while (originalNum != 0) {
+        originalNum /= 10;
+        ++n;
+    }
+    originalNum = num;
+    while (originalNum != 0) {
+        remainder = originalNum % 10;
+        result += round(pow(remainder, n));
+        originalNum /= 10;
+    }
+    return (result == num);
+}
+
+void printArmstrongInRange(int start, int end) {
+    printf("Armstrong numbers between %d and %d are: ", start, end);
+    for (int i = start; i <= end; i++) {
+        if (checkArmstrong(i)) {
+            printf("%d ", i);
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int start = 1, end = 1000; // Example range
+    printArmstrongInRange(start, end);
+    return 0;
+}
